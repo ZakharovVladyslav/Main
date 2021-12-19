@@ -11,7 +11,7 @@ double max(double a, double b, double c) {
 
 int main() {
     ifstream input_data;
-    input_data.open("assets/input_data.txt");
+    input_data.open("../assets/input_data.txt");
 
     if (!input_data.is_open()) {
         cout << "Error while opening file";
@@ -34,7 +34,7 @@ int main() {
     double max_value = max(arr[0][0], arr[1][0], arr[2][0]);
 
     ofstream output_data;
-    output_data.open("assets/output_data.txt");
+    output_data.open("../assets/output_data.txt");
 
     if (!output_data.is_open()) {
         cout << "Error while opening file";

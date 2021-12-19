@@ -12,6 +12,9 @@ int factorial(int n) {
 int power(int n, int pow) {
 	int k = n;
 
+	if (pow < 0)
+		pow *= (-1);
+
 	for (int i = 1; i < pow; i++)
 		n *= k;
 
@@ -28,7 +31,7 @@ int main() {
 	cin >> N;
 
 	for (int n = 0; n < N; n++) {
-		int res = (pow((-1), n))* (pow(2, n) / factorial(n));
+		int res = (power((-1), n)) * (power(2, n) / factorial(n));
 		cout << res << " ";
 	}
 
