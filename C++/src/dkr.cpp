@@ -13,7 +13,10 @@ int power(int n, int pow) {
 	int k = n;
 
 	if (pow < 0)
-		pow *= (-1);
+		pow = 1 / pow;
+
+	if (pow == 0)
+		n = 1;
 
 	for (int i = 1; i < pow; i++)
 		n *= k;
@@ -22,17 +25,15 @@ int power(int n, int pow) {
 }
 
 int main() {
-	int a;
 	unsigned int N;
 
-	cout << "a: ";
-	cin >> a;
 	cout << "N: ";
 	cin >> N;
 
-	for (int n = 0; n < N; n++) {
-		int res = (power((-1), n)) * (power(2, n) / factorial(n));
-		cout << res << " ";
+	for (int n = 0; n < N; ++n) {		
+		int res = power((-1), n) * (power(2, n) / factorial(n));
+
+		cout << n + 1 << ": " << res << "\n";
 	}
 
 	return 0;
