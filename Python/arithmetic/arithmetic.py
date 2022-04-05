@@ -29,12 +29,8 @@ def arithmetic(num1, num2, action):
 
 #def save_results(result, num_of_operations):
 def save_results(result):
-    file = open("results.txt", "w")
-    
-    #file.write(f"Operation {num_of_operations}, result: {result}\n")
-    file.write(str(result))
-    
-    file.close()
+    with open("results.txt", "a") as res_file:
+        res_file.write(f"Result: {result}\n")
 
 # main section 
     
