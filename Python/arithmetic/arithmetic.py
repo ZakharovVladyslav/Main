@@ -9,53 +9,48 @@ import os
 os.system("cls")
 
 def arithmetic(num1, num2, action):
-    if (action == "+"):
+    if action == "+":
         num1 += num2
         
-    elif (action == "-"):
+    elif action == "-":
         num1 -= num2
     
-    elif (action == "/"):
+    elif action == "/":
         num1 /= num2
     
-    elif (action == "*"):
+    elif action == "*":
         num1 *= num2
         
     else:
         print("You've entered wrong option")
     
     return num1
-    
-
-#def save_results(result, num_of_operations):
-def save_results(result):
-    with open("results.txt", "a") as res_file:
-        res_file.write(f"Result: {result}\n")
 
 # main section 
     
 num1 = int(input("Enter num1: "))
 num2 = int(input("Enter num2: "))
 action = str(input("Enter action: "))
+count = 1
+
+file = open("results.txt", "a")
 
 result = arithmetic(num1, num2, action)
-print("Result: ", result)    
-save_results(result)
+print("Result: ", result)
+file.write("\n")
+file.write(f"Result {count}: {result}\n")    
 
 answer = str(input("Want to continue? (yes / no): "))
-while (answer != "no"):
+count += 1
+
+while answer != "no":
     num1 = int(input("Enter num1: "))
     num2 = int(input("Enter num2: "))
     action = str(input("Enter action: "))
         
     result = arithmetic(num1, num2, action)
-    print("Result: ", result)    
-    save_results(result)
+    print("Result: ", result)  
+    file.write(f"Result {count}: {result}\n")
         
     answer = str(input("Want to continue? (yes / no): "))
-        
-    if (answer == "yes"):
-        os._exit()
-        
-    else:
-        continue
+    count += 1
