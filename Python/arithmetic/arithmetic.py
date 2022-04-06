@@ -4,72 +4,150 @@
 В остальных случаях вернуть строку "Неизвестная операция".
 '''
 
+import sys
 import os
+import os.path
 
 os.system("cls")
 
-def arithmetic(num1, num2, action):
+def arithmetic(nums, action):
     if action == "+":
-        num1 += num2
-        
+        res = 0
+        for i in range(len(nums)):
+            res += nums[i]
+
     elif action == "-":
-        num1 -= num2
+        for i in range(len(nums) - 1):
+            nums[0] -= nums[i + 1]
+        res = nums[0]
     
     elif action == "/":
-        num1 /= num2
+        for i in range(len(nums) - 1):
+            nums[0] /= nums[i + 1]
+        res = nums[0]
     
     elif action == "*":
-        num1 *= num2
+        for i in range(len(nums) - 1):
+            nums[0] *= nums[i + 1]
+        res = nums[0]
         
     else:
         print("You've entered wrong option")
-    
-    return num1
+        sys.exit()
+
+    return res
+
 
 # main section 
 
-print("What do you want to choose? (choose from the list below)")
-print("> Calculator - calc\n>Check all results - file")
-choice = str(input("Choice:"))
 
-if choice == "calc":
-    num1 = int(input("Enter num1: "))
-    num2 = int(input("Enter num2: "))
-    action = str(input("Enter action: "))
-    count = 1
+while True:
 
-    file = open("results.txt", "a")
+    _str = ""
 
-    result = arithmetic(num1, num2, action)
-    print("Result: ", result)
-    file.write("\n")
-    file.write(f"Result {count}: {result}\n")    
+    print("\n" + _str.center(27, "-") + "\nWhat do you want to choose? (choose from the list below)\n----")
+    print("> Calculator - calc\n> Check all results - file\n> Exit - exit\n> Recall programm - rec\n> Delete results fils - del")
+    choice = str(input("Choice: "))
+    os.system("cls")
+    print("\n" + _str.center(27, "-"))
 
-    answer = str(input("Want to continue? (yes / no): "))
-    count += 1
-
-    if answer == "yes":
-        while answer != "no":
-            num1 = int(input("Enter num1: "))
-            num2 = int(input("Enter num2: "))
-            action = str(input("Enter action: "))
-                
-            result = arithmetic(num1, num2, action)
-            print("Result: ", result)  
-            file.write(f"Result {count}: {result}\n")
-                
-            answer = str(input("Want to continue? (yes / no): "))
-            count += 1
+    if choice == "calc":
+        
+        num_of_nums = int(input("Enter number of numbers: "))
+        nums = []
+        for i in range(num_of_nums):
+            i += 1
+            num = int(input(f"Number {i}: "))
+            nums.append(num)  
             
-    file.close()
+        action = str(input("Enter action: "))
+        count = 1
+
+        file = open("results.txt", "a")
+
+        result = arithmetic(nums, action)
+        print("-----------")
+        print("Result: ", result)
+        file.write(f"Result {count}: {result}\n")    
+        file.write("\n")
+
+        print("\n" + _str.center(30, "-"))
+        answer = str(input("Want to continue? (yes / no): "))
+        print(_str.center(30, "-") + "\n")
+        
+        count += 1
+
+        if answer == "yes":
+            while answer != "no":
+                 
+                num_of_nums = int(input("Enter number of numbers: "))
+                nums = []
+                for i in range(num_of_nums):
+                    i += 1
+                    num = int(input(f"Number {i}: "))
+                    nums.append(num)  
             
-elif choice == "file":
-    file = open("results.txt", "r")
-    
-    print(file.read())
-    
-    file.close()
-    
-else:
-    print("Wrong variant")
-    os._exit()
+                action = str(input("Enter action: (+ | - | * | / "))
+                    
+                result = arithmetic(nums, action)
+                print("-----------")
+                print("Result: ", result)  
+                file.write(f"Result {count}: {result}\n")
+                file.write("\n")
+                
+                print(_str.center(30, "-"))    
+                answer = str(input("\nWant to continue? (yes / no): "))
+                print(_str.center(30, "-" + "\n"))
+                count += 1
+                
+        file.close()
+                
+    elif choice == "file":
+        
+        if os.path.exists("results.txt"):
+        
+            file = open("results.txt", "r")
+            
+            print("-----------\n" + file.read() + "-----------")
+            
+            file.close()
+        else:
+            print("Such file doesn't exist. Do you want to create a file?\n" + _str.center(25, "-"))
+            
+            file_choice = str(input("Create a file? (yes / no)\n\nChoice: "))
+            
+            if file_choice == "yes":
+                print(_str.center(22, "-") + "\nFile has been created!\n")
+                
+                file = open("results.txt", "w")
+                file.write("Results:\n")
+                file.close()
+            
+            elif file_choice == "no":
+                continue
+            
+            else:
+                sys.exit()
+            
+    elif choice == "del":
+        if os.path.exists("results.txt"):
+            os.remove("results.txt")
+            print("----\nFile has been deleted\n----")
+        else:
+            print("Such file does not exist...")
+            del_choice = str(input("----\nWant to create file? (yes / no)\nChoice: "))
+            if del_choice == "yes":
+                file = open("results.txt", "w")
+                print("----\nFile has been created!\n----")
+                file.write("Results:\n")
+                file.close()
+        
+    elif choice == "exit":
+        sys.exit()
+        
+    elif choice == "rec":
+        os.system("exit")
+        os.system("python .\\arithmetic.py")
+        
+    else:
+        sys.exit()
